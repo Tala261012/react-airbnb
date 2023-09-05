@@ -1,3 +1,17 @@
+import Page from "./component/page";
+import Header from "./component/header";
+import Title from "./component/title";
+import Photo from "./component/photo";
+import Price from "./component/price";
+import RoomList from "./component/room-list";
+import Description from "./component/description";
+import Details from "./component/details";
+import Amenities from "./component/amenities";
+import Contact from "./component/contact";
+import Additional from "./component/additional";
+import Attractions from "./component/attractions";
+import Review from "./component/review";
+
 function App() {
   const data = {
     listing_name: "Іст-Сайд Біл",
@@ -144,7 +158,45 @@ function App() {
     ],
   };
 
-  return <div>Hello World</div>;
+  return (
+    <Page>
+      <Header />
+      <Title
+        title={data.listing_name}
+        rating={data.reviews_summary.average_rating}
+        review={data.reviews_summary.total_reviews}
+        city={data.location.city}
+        country={data.location.country}
+        superhost={data.superhost}
+      />
+      <Photo src={data.image} name={data.listing_name} />
+      <Price
+        price={data.price.original_price}
+        discount={data.price.discounted_price}
+        currency={data.price.currency}
+        cleaning={data.price.cleaning_fee}
+        service={data.price.service_fee}
+        checkin={data.availability.checkin_date}
+        checkout={data.availability.checkout_date}
+      />
+      <RoomList list={data.roomTypes} />
+      <Description title="Опис" children={data.description} />
+      <Details {...data.property_details} title="Деталі властивості:" />
+      <Description title="Про сусідів" children={data.neighborhood_info} />
+      <Amenities {...data.amenities} title="Зручності" />
+      <Contact {...data.contact_info} />
+      <Additional
+        rules={data.additional_properties.house_rules}
+        policy={data.additional_properties.cancellation_policy}
+        transport={data.additional_properties.local_transportation}
+        lang={data.additional_properties.host_languages}
+        offer={data.additional_properties.special_offers}
+        instructions={data.additional_properties["check-in_instructions"]}
+      />
+      <Review list={data.guestReviews} />
+      <Attractions list={data.nearbyAttractions} />
+    </Page>
+  );
 }
 
 export default App;
